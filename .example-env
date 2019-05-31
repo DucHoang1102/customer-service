@@ -1,4 +1,5 @@
 # Environment Config
+# APP_ENV=development || production || test
 
 APP_NAME=
 APP_URL=http://localhost/
