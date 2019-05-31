@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // MongoDB
 mongoose.connect(process.env.DB_URI || 'mongodb://localhost/test');
 
+require('./models/Customers');
 app.use(require('./routes'));
 
 // Production error handler
@@ -27,7 +28,7 @@ if (isProduction || process.env.APP_DEBUG === 'false') {
         next(httpError(404));
     });
 
-    app.use(function(error, req, res, next) {
+    app.use(function(error, req, res) {
         return res.send(500);
     });
 }
