@@ -1,6 +1,6 @@
 var routerIndex = require('express').Router();
 var routerGroup = require('express').Router();
-var customerController = require('../controllers/');
+var customerController = require('../controllers/Customer');
 
 routerGroup.get('/', customerController.index);
 
