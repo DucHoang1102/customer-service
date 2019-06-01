@@ -11,7 +11,7 @@ var CustomersSchema = new mongoose.Schema({
     },
     phone: {type: String, unique: true, index: true},
     gender: {type: Number,default: 3},
-    year_of_birth: {type: Date, default: null},
+    birthday: {type: Date, default: null},
     id_facebook: {type: String, default: ""},
     scores: {type: Number, default: 0},
     note: {type: String, default: ""},
