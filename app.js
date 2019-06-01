@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // MongoDB
 mongoose.connect(process.env.DB_URI || 'mongodb://localhost/test');
 
-require('./models/Customers');
+require('./models');
 app.use(require('./routes'));
 
 // Production error handler
