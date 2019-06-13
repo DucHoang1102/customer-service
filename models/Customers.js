@@ -9,33 +9,15 @@ var CustomersSchema = new mongoose.Schema({
         district: {type: String, default: ""},
         province: {type: String, default: ""}
     },
-    phone: {type: String, unique: true, index: true},
-    gender: {type: Number,default: 3},
+    phone: {type: String, required: true, unique: true},
+    gender: {type: Number, min: 1, max: 3, default: 3},
     birthday: {type: Date, default: null},
     id_facebook: {type: String, default: ""},
-    scores: {type: Number, default: 0},
+    scores: {type: Number, min: 0, default: 0},
     note: {type: String, default: ""},
 }, {timestamps: true});
 
 CustomersSchema.plugin(uniqueValidator, 'is already exist.');
 
-CustomersSchema.methods.getCustomer = function() {
-    return {
-        _id: this._id,
-        name: this.name,
-        address: {
-            full: this.address.full,
-            commune: this.address.commune,
-            district: this.address.district,
-            province: this.address.province
-        },
-        phone: this.phone,
-        gender: this.gender,
-        year_of_birth: this.year_of_birth,
-        id_facebook: this.id_facebook,
-        scores: this.scores,
-        note: this.note
-    }
-}
+module.exports = mongoose.model('Customers', CustomersSchema);
 
-mongoose.model('Customers', CustomersSchema);

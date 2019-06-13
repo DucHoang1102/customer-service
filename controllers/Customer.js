@@ -26,9 +26,7 @@ exports.view = function (req, res, next) {
         var customers = results[0]
         return res.json({customers: customers});
     }).catch((err) => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message });
     });
 };
 
@@ -40,47 +38,76 @@ exports.new = function (req, res, next) {
             customers: results
         });
     }).catch((err) => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message });
     });
 };
 
 exports.details = function (req, res, next) {
     Customer.findById(req.params.id).exec().then(results => {
+        if (!results) throw new Error('Customer not found');
+
         return res.json({
             customers: results
         });
     }).catch(err => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message });
     });
 };
 
 exports.update = function (req, res, next) {
-    var customerBeforeUpdate = Customer.findByIdAndUpdate(req.params.id, req.body.customer).exec();
-    var customerAfterUpdate = Customer.findById(req.params.id).exec();
+    Customer.findById(req.params.id).exec().then(customer => {
+        if (!customer) throw new Error('Customer not found');
 
-    Promise.all([customerBeforeUpdate, customerAfterUpdate]).then(results => {
-        return res.json({
-            customers: results
+        if (typeof req.body.customer.name !== 'undefined') {
+            customer.name = req.body.customer.name;
+        }
+
+        if (typeof req.body.customer.address !== 'undefined') {
+            customer.address = req.body.customer.address;
+        }
+
+        if (typeof req.body.customer.phone !== 'undefined') {
+            customer.phone = req.body.customer.phone;
+        }
+
+        if (typeof req.body.customer.gender !== 'undefined') {
+            customer.gender = req.body.customer.gender;
+        }
+
+        if (typeof req.body.customer.birthday !== 'undefined') {
+            customer.birthday = req.body.customer.birthday;
+        }
+
+        if (typeof req.body.customer.id_facebook !== 'undefined') {
+            customer.id_facebook = req.body.customer.id_facebook;
+        }
+
+        if (typeof req.body.customer.scores !== 'undefined') {
+            customer.scores = req.body.customer.scores;
+        }
+
+        if (typeof req.body.customer.note !== 'undefined') {
+            customer.note = req.body.customer.note;
+        }
+
+        customer.save().then(customer => {
+            return res.json({ customer: customer });
+        }).catch(err => {
+            return res.json({ errors: err.message });
         });
     }).catch(err => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message});
     });
 };
 
 exports.delete = function (req, res, next) {
     Customer.findByIdAndRemove(req.params.id).exec().then(results => {
+        if (!results) throw new Error('Customer not found');
+
         return res.json({
             customers: results
         });
     }).catch(err => {
-        return res.json({
-            errors: err
-        });
+        return res.json({ errors: err.message });
     });
 };
