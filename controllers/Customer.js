@@ -25,9 +25,8 @@ exports.view = function (req, res, next) {
     Promise.all([results]).then(results => {
         var customers = results[0]
         return res.json({customers: customers});
-    }).catch((err) => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.new = function (req, res, next) {
@@ -37,9 +36,8 @@ exports.new = function (req, res, next) {
         return res.json({
             customers: results
         });
-    }).catch((err) => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.details = function (req, res, next) {
@@ -49,9 +47,8 @@ exports.details = function (req, res, next) {
         return res.json({
             customers: results
         });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.update = function (req, res, next) {
@@ -92,12 +89,10 @@ exports.update = function (req, res, next) {
 
         customer.save().then(customer => {
             return res.json({ customer: customer });
-        }).catch(err => {
-            return res.json({ errors: err.message });
-        });
-    }).catch(err => {
-        return res.json({ errors: err.message});
-    });
+            
+        }).catch( err => res.json({ errors: err.message }) );
+
+    }).catch( err => res.json({ errors: err.message }) );
 };
 
 exports.delete = function (req, res, next) {
@@ -107,7 +102,6 @@ exports.delete = function (req, res, next) {
         return res.json({
             customers: results
         });
-    }).catch(err => {
-        return res.json({ errors: err.message });
-    });
+        
+    }).catch( err => res.json({ errors: err.message }) );
 };

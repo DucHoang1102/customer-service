@@ -9,11 +9,11 @@ var CustomersSchema = new mongoose.Schema({
         district: {type: String, default: ""},
         province: {type: String, default: ""}
     },
-    phone: {type: String, required: true, unique: true},
-    gender: {type: Number, min: 1, max: 3, default: 3},
-    birthday: {type: Date, default: null},
-    id_facebook: {type: String, default: ""},
-    scores: {type: Number, min: 0, default: 0},
+    phone: {type: Number, required: true, unique: true, trim: true, min: 100000000, max: 999999999},
+    gender: {type: Number, min: 1, max: 3, default: 3, trim: true},
+    birthday: {type: Date, default: null, trim: true},
+    id_facebook: {type: Number, default: 0, trim: true},
+    scores: {type: Number, min: 0, default: 0, trim: true},
     note: {type: String, default: ""},
 }, {timestamps: true});
 
