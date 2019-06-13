@@ -17,19 +17,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // MongoDB
-mongoose.connect(process.env.DB_URI || 'mongodb://localhost/test');
+mongoose.connect(process.env.DB_URI, {useNewUrlParser: true});
 
 require('./models');
 app.use(require('./routes'));
 
+// Catch 404 and forward to error handle
+app.use(function (req, res, next){
+    next(httpError(404));
+});
+
 // Production error handler
 if (isProduction || process.env.APP_DEBUG === 'false') {
-    app.use(function (req, res, next){
-        next(httpError(404));
-    });
-
-    app.use(function(error, req, res) {
-        return res.send(500);
+    app.use(function (err, req, res, next){
+        return res.sendStatus(404);
     });
 }
 
@@ -37,3 +38,6 @@ if (isProduction || process.env.APP_DEBUG === 'false') {
 var server = app.listen( process.env.APP_PORT || 3000, function () {
     console.log('Run ' + this.address().port);
 });
+
+// For testing
+module.exports = server;
