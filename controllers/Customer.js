@@ -1,5 +1,6 @@
-var mongoose = require('mongoose'),
-    Customer = mongoose.model('Customers');
+var mongoose    = require('mongoose'),
+    Customer    = mongoose.model('Customers'),
+    idGenerator = require('id-random-generator');
 
 exports.index = function (req, res, next) {
     return res.json({
@@ -9,11 +10,11 @@ exports.index = function (req, res, next) {
 };
 
 exports.view = function (req, res, next) {
-    var limit = String(req.body.limit) || 20; // Why String()? Because case req.body.limit = 0 is Number
+    var limit  = String(req.body.limit)  || 20; // Why String()? Because case req.body.limit = 0 is Number
     var offset = String(req.body.offset) || 0;
-    var query = req.body.query || {};
-    var sort = req.body.sort || {createdAt: 'desc'};
-    var select = req.body.select || '';
+    var query  = req.body.query          || {};
+    var sort   = req.body.sort           || {createdAt: 'desc'};
+    var select = req.body.select         || '';
 
     var results = Customer.find(query)
         .select(select)
@@ -32,6 +33,9 @@ exports.view = function (req, res, next) {
 exports.new = function (req, res, next) {
     var customer = new Customer(req.body.customer);
 
+    // Random id
+    customer.id = idGenerator({prefix: 'CU', min: 1000000000, max: 9999999999});
+
     return customer.save().then(results => {
         return res.json({
             customers: results
@@ -41,7 +45,7 @@ exports.new = function (req, res, next) {
 };
 
 exports.details = function (req, res, next) {
-    Customer.findById(req.params.id).exec().then(results => {
+    Customer.findOne( {id: req.params.id} ).exec().then(results => {
         if (!results) throw new Error('Customer not found');
 
         return res.json({
@@ -52,7 +56,7 @@ exports.details = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
-    Customer.findById(req.params.id).exec().then(customer => {
+    Customer.findOne( {id: req.params.id} ).exec().then(customer => {
         if (!customer) throw new Error('Customer not found');
 
         if (typeof req.body.customer.name !== 'undefined') {
@@ -96,7 +100,7 @@ exports.update = function (req, res, next) {
 };
 
 exports.delete = function (req, res, next) {
-    Customer.findByIdAndRemove(req.params.id).exec().then(results => {
+    Customer.findOneAndRemove( {id: req.params.id} ).exec().then(results => {
         if (!results) throw new Error('Customer not found');
 
         return res.json({

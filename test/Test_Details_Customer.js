@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 var listData = [
   {
     it     : 'CASE: Customer not found',
-    _id    : '5d02bab8e8a10b04f820ecfb',
+    id     : 'CU2323434789',
     send   : {},
     matched: {'errors': 'Customer not found'}
   },
@@ -42,16 +42,16 @@ var listData = [
 chai.request(uriTest)
         .post('/api/customers')
         .send({
-            'customer': {
-                'phone': 144344529,
-                'name': 'Nguyễn Văn A',
+            'customer'   : {
+                'phone'  : 144344529,
+                'name'   : 'Nguyễn Văn A',
                 'address': {
-                    'full': 'Đoàn Kết - Thanh Miện - Hải Dương',
-                    'commune': 'Đoàn Kết',
+                    'full'    : 'Đoàn Kết - Thanh Miện - Hải Dương',
+                    'commune' : 'Đoàn Kết',
                     'district': 'Thanh Miện',
                     'province': 'Hải Dương'
                 },
-                'gender': 1,
+                'gender'  : 1,
                 'birthday': '1990-5-28'
             }
         })
@@ -61,7 +61,7 @@ chai.request(uriTest)
 
                     it(data.it, (done) => {
                         chai.request(uriTest)
-                            .get('/api/customers/' + (data._id || res.body.customers._id) )
+                            .get('/api/customers/' + (data.id || res.body.customers.id) )
                             .send(data.send)
                             .end((err, res) => {
                                 expect(err).to.be.null;

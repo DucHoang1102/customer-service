@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 var listData = [
   {
     it     : 'CASE: Customer not found',
-    _id    : '5d02b7517012f3259cfe197f',
+    id     : 'CU3043446788',
     send   : {},
     matched: {'errors': 'Customer not found'}
   },
@@ -40,7 +40,7 @@ chai.request(uriTest)
 
                     it(data.it, (done) => {
                         chai.request(uriTest)
-                            .delete('/api/customers/' + (data._id || res.body.customers._id) )
+                            .delete('/api/customers/' + (data.id || res.body.customers.id) )
                             .send(data.send)
                             .end((err, res) => {
                                 expect(err).to.be.null;

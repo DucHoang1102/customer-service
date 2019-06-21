@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 var listData = [
   {
     it     : 'CASE: Update customer failed because NOT FOUND',
-    _id    : '5d02b1d448d9600530fc259f',
+    id     : 'CU4344783234',
     send   : {'customer': {'phone': ''}},
     matched: {'errors': 'Customer not found'}
   },
@@ -68,7 +68,7 @@ chai.request(uriTest)
 
                     it(data.it, (done) => {
                         chai.request(uriTest)
-                            .put('/api/customers/' + (data._id || res.body.customers._id) )
+                            .put('/api/customers/' + (data.id || res.body.customers.id) )
                             .send(data.send)
                             .end((err, res) => {
                                 expect(err).to.be.null;
