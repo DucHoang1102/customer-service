@@ -34,7 +34,7 @@ exports.new = function (req, res, next) {
     var customer = new Customer(req.body.customer);
 
     // Random id
-    customer.id = idGenerator({prefix: 'CU', min: 1000000000, max: 9999999999});
+    customer.id = idGenerator.generate({prefix: 'CU', min: 1000000000, max: 9999999999});
 
     return customer.save().then(results => {
         return res.json({
