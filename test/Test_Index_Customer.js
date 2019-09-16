@@ -4,7 +4,7 @@ var chai      = require('chai'),
     expect    = chai.expect,
     dotenv    = require('dotenv').config({path: './.env'}),
     uriTest   = process.env.APP_URL + ':' + process.env.APP_PORT;
-console.log(uriTest);
+
 chai.use(chaiHttp);
 
 /*

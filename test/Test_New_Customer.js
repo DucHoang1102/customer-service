@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 
 /*
- * Test POST: /api/embryos
+ * Test POST: /api/customer
  */
 
 var listData = [
