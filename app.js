@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // MongoDB
-mongoose.connect(process.env.DB_URI, {useNewUrlParser: true});
+mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
 require('./models');
 app.use(require('./routes'));
